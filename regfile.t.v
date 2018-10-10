@@ -142,6 +142,81 @@ output reg		Clk
   end
 
 
+
+
+  // Test Case 3: 
+  //   Write '30' to register 2, make sure it is only registered to one
+  WriteRegister = 5'd2;
+  WriteData = 32'd15;
+  RegWrite = 1;
+  ReadRegister1 = 5'd3;
+  ReadRegister2 = 5'd3;
+  #5 Clk=1; #5 Clk=0;
+
+  if((ReadData1 !==  32'bx) || (ReadData2 !==  32'bx)) begin
+    dutpassed = 0;
+    $display("Test Case 3 Failed");
+    $display("%d , %d",ReadData1,  1'bX);
+  end
+
+
+
+
+
+  // Test Case 4: 
+  //   Write '0' to register 2,then sets to 42 and sets enable false
+  WriteRegister = 5'd2;
+  WriteData = 32'd0;
+  RegWrite = 1;
+  ReadRegister1 = 5'd2;
+  ReadRegister2 = 5'd2;
+  #5 Clk=1; #5 Clk=0; // Generate single clock pulse
+
+  WriteRegister = 5'd2;
+  WriteData = 32'd42;
+  RegWrite = 0;
+  ReadRegister1 = 5'd2;
+  ReadRegister2 = 5'd2;
+  #5 Clk=1; #5 Clk=0; // Generate single clock pulse
+
+
+  // Verify expectations and report test result
+  if((ReadData1 !== 0) || (ReadData2 !== 0)) begin
+    dutpassed = 0;  // Set to 'false' on failure
+    $display("Test Case 4 Failed");
+    $display("%d, %d",ReadData1, ReadData2);
+  end
+
+  // Test Case 5: 
+  //   Write '15' to register 0, make sure it registers as 0
+  WriteRegister = 5'd0;
+  WriteData = 32'd15;
+  RegWrite = 1;
+  ReadRegister1 = 5'd0;
+  ReadRegister2 = 5'd0;
+  #5 Clk=1; #5 Clk=0;
+
+  if((ReadData1 !==  0) || (ReadData2 !==  0)) begin
+    dutpassed = 0;
+    $display("Test Case 5 Failed");
+  end
+
+  // Test Case 6: 
+  //   Write '15' to register 6, make sure it registers as 30
+  WriteRegister = 5'd6;
+  WriteData = 32'd15;
+  RegWrite = 1;
+  ReadRegister1 = 5'd6;
+  ReadRegister2 = 5'd6;
+  #5 Clk=1; #5 Clk=0;
+
+  if((ReadData1 !==  15) || (ReadData2 !==  15)) begin
+    dutpassed = 0;
+    $display("Test Case 6 Failed");
+  end
+
+
+
   // All done!  Wait a moment and signal test completion.
   #5
   endtest = 1;

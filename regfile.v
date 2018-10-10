@@ -105,12 +105,5 @@ input		Clk		// Clock (Positive Edge Triggered)
 
 
 
-
- //  // These two lines are clearly wrong.  They are included to showcase how the 
- //  // test harness works. Delete them after you understand the testing process, 
- //  // and replace them with your actual code.
-  // assign ReadData1 = 42;
-  // assign ReadData2 = 42;
-
 endmodule
 
