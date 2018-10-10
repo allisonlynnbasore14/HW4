@@ -11,6 +11,12 @@ input		clk
 );
 
   register register(output[0], input[0], wrenable, clk);
+  //reg32Z register32zero(.qZ(q),.dZ(d), .wrenable(wrenable), .clk(Clk));
+  //assign output[0] = qZ; 
+   	//output[31:0]	q,
+	// input[31:0]		d,
+	// input		wrenable,
+	// input		clk
 
   genvar i;
   generate
