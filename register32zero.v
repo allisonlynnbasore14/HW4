@@ -1,27 +1,22 @@
 // 32-bit D Flip-Flop with enable outputs zero
 
 module register32zero
+#(parameter VAL=0, WID=32)
 (
-output[31:0]	q,
-input[31:0]		d,
+output reg[WID-1:0]	q,
+input[WID-1:0]		d,
 input		wrenable,
 input		clk
 );
-
-  // register register(output[0], input[0], wrenable, clk);
-  // output[0] = 0;
-
-  wire[31:0] out = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-  assign q = out;
-
-  // genvar i;
-  // generate
-  //   for (i=1; i<32; i=i+1)
-  //   begin:genblock
-  //     register register(output[i], input[i], wrenable, clk);
-  //     output[1] = 0;
-  //   end
-  // endgenerate
-
-
+	genvar i;
+	generate
+		for(i=0; i<WID; i=i+1)
+		begin:genblock
+			always @(posedge clk) begin
+			    if(wrenable) begin
+			        q[i] <= VAL;
+			    end
+			end
+		end
+	endgenerate
 endmodule
